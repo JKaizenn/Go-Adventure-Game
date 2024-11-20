@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type Location struct {
+	Name        string            `json:"name"`
+	Description string            `json:"description"`
+	Exits       map[string]string `json:"exits"`
+}
+
 func main() {
 
 	// Welcome the User

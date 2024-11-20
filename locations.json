@@ -1,0 +1,24 @@
+[
+    {
+        "name": "field",
+        "description": "You are standing in an open field west of a white house.",
+        "exits": {
+            "north": "forest",
+            "east": "house"
+        }
+    },
+    {
+        "name": "forest",
+        "description": "You are in a forest with trees all around.",
+        "exits": {
+            "south": "field"
+        }
+    },
+    {
+        "name": "house",
+        "description": "You are inside a small house, with a welcoming fire in the fireplace.",
+        "exits": {
+            "west": "field"
+        }
+    }
+]
