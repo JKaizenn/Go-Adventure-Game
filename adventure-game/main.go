@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -24,6 +25,14 @@ func main() {
 	name = strings.TrimSpace(name) // Trim any whitespace and newline characters
 
 	fmt.Printf("Hello, %s! Let the adventure begin!\n", name)
+
+	//Open the JSON File
+	file, err := os.Open("locations.json")
+	if err != nil {
+		fmt.Println("Error opening JSON file:", err)
+		return
+	}
+	defer file.Close()
 
 	// Start the Game loop
 	for {
