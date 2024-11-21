@@ -5,20 +5,33 @@
         "exits": {
             "north": "forest",
             "east": "house"
-        }
+        },
+        "items": [
+            {
+                "name": "key",
+                "description": "A small rusty key."
+            }
+        ]
     },
     {
         "name": "forest",
         "description": "You are in a forest with trees all around.",
         "exits": {
             "south": "field"
-        }
+        },
+        "items": []
     },
     {
         "name": "house",
         "description": "You are inside a small house, with a welcoming fire in the fireplace.",
         "exits": {
             "west": "field"
-        }
+        },
+        "items": [
+            {
+                "name": "map",
+                "description": "A map showing the surrounding area."
+            }
+        ]
     }
 ]

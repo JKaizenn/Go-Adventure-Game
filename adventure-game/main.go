@@ -8,10 +8,15 @@ import (
 	"strings"
 )
 
+type Item struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
 type Location struct {
 	Name        string            `json:"name"`
 	Description string            `json:"description"`
 	Exits       map[string]string `json:"exits"`
+	Items       []Item            `json:"items"`
 }
 
 func main() {
@@ -22,7 +27,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter your name: ")
 	name, _ := reader.ReadString('\n')
-	name = strings.TrimSpace(name) // Trim any whitespace and newline characters
+	name = strings.TrimSpace(name)
 
 	fmt.Printf("Hello, %s! Let the adventure begin!\n", name)
 
@@ -34,9 +39,29 @@ func main() {
 	}
 	defer file.Close()
 
+	//Decode the JSON file
+	decoder := json.NewDecoder(file)
+	var locationsData []Location
+
+	err = decoder.Decode(&locationsData)
+	if err != nil {
+		fmt.Println("Error decoding JSON data:", err)
+		return
+	}
+
+	//Convert the slice to map
+	locations := make(map[string]Location)
+	for _, loc := range locationsData {
+		locations[loc.Name] = loc
+	}
+
+	//Set the player's starting location
+	currentLocation := "field"
+
 	// Start the Game loop
 	for {
 		fmt.Print(">")
+		fmt.Println("Your current options are: look and help")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 
@@ -45,16 +70,23 @@ func main() {
 			fmt.Println("Thank you for playing!")
 			break
 		} else {
-			processCommand(input)
+			processCommand(input, locations, &currentLocation)
 		}
 	}
 }
 
-func processCommand(command string) {
-	switch command {
-	case "look":
-		fmt.Println("You are standing in an open field west of a white house.")
-	case "help":
+func processCommand(command string, locations map[string]Location, currentLocation *string) {
+	switch {
+	case command == "look":
+		loc := locations[*currentLocation]
+		fmt.Println(loc.Description)
+		if len(loc.Items) > 0 {
+			fmt.Println("You see the following items:")
+			for _, item := range loc.Items {
+				fmt.Printf("-%s: %s\n", item.Name, item.Description)
+			}
+		}
+	case command == "help":
 		fmt.Println("Available Commands: look, help, quit")
 	default:
 		fmt.Printf("I don't understand '%s'. Type 'help' for available commands.\n", command)
