@@ -22,7 +22,7 @@ func main() {
 	fmt.Printf("Hello, %s! Let the adventure begin!\n", name)
 
 	// Load locations
-	locations, err := LoadLocations("locations.json")
+	locations, err := LoadLocations("data/locations.json")
 	if err != nil {
 		fmt.Println("Error loading locations:", err)
 		return
