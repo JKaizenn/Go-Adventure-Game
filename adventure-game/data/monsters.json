@@ -1,0 +1,12 @@
+[
+    {
+        "name": "deku",
+        "description": "A small woodlike creature that shoots deku seeds from its mouth",
+        "attacks": {
+            "attack-1": {
+                "name": "Bubble",
+                "damage": 5
+            }
+        }
+    }
+]
